@@ -6,6 +6,11 @@ NOTE: I haven't tested any of this code. Just wrote it, compiled it, and committ
 
 I'd be happy to accept pull requests.
 
+To create an instance:
+```swift
+let yourls = YOURLSClient(yourlsSignature: "your_yourls_signature", yourlsBaseUrl: "http://youryourlsurl.xxx/")
+```
+
 To shorten a link:
 ```swift        
 yourls.shorten(expandedURL: "http://jerryfahrni.com/ptug/") { (link: YOURLSLink?, error: Error?) in
