@@ -7,7 +7,7 @@ NOTE: I haven't tested any of this code. Just wrote it, compiled it, and committ
 I'd be happy to accept pull requests.
 
 To shorten a link:
-```        
+```swift        
 yourls.shorten(expandedURL: "http://jerryfahrni.com/ptug/") { (link: YOURLSLink?, error: Error?) in
   if let link = link {
     print("short link ==> \(link.shortLink)")
@@ -16,7 +16,7 @@ yourls.shorten(expandedURL: "http://jerryfahrni.com/ptug/") { (link: YOURLSLink?
 ```
 
 To expand a link:
-```
+```swift
 yourls.expand(shortURL: "http://youryourlsurl.xxx/ptug/") { (link: YOURLSLink?, error: Error?) in
   if let link = link {
     print("expanded link ==> \(link.expandedLink)")
