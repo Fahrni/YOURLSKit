@@ -8,16 +8,16 @@
 
 import Foundation
 
-typealias ActionCompletionHandler = (_ link: YOURLSLink?, _ error: Error?) -> Void
+public typealias ActionCompletionHandler = (_ link: YOURLSLink?, _ error: Error?) -> Void
 typealias POSTCompletionHandler = (Data?, URLResponse?, Error?) -> Void
 
-class YOURLSClient: NSObject {
+public class YOURLSClient: NSObject {
     struct Service {
         static let endpoint = "yourls-api.php"
         static let shortAction = "shorturl"
         static let shortURL = "shorturl"
         static let expandAction = "expand"
-        static let expandURL = "url"
+        static let longURL = "longurl"
         static let format = "json"
         static let methodPost = "POST"
     }
@@ -25,7 +25,7 @@ class YOURLSClient: NSObject {
     private var signature: String
     private var baseURL: String
 
-    init(yourlsSignature: String, yourlsBaseURL: String) {
+    public init(yourlsSignature: String, yourlsBaseURL: String) {
         self.signature = yourlsSignature
         self.baseURL = yourlsBaseURL
     }
@@ -67,7 +67,7 @@ class YOURLSClient: NSObject {
                 }
                 if let weakSelf = self,
                     let data = data,
-                    let expandedURL = weakSelf.getLinkFor(key: YOURLSClient.Service.expandURL, data) {
+                    let expandedURL = weakSelf.getLinkFor(key: YOURLSClient.Service.longURL, data) {
                     let link = YOURLSLink(shortLink: shortURL, expandedLink: expandedURL)
                     completionHandler(link, nil)
                 }
@@ -77,7 +77,7 @@ class YOURLSClient: NSObject {
     // MARK: - Private Methods
 
     private func POST(queryParameters: [String : String],
-                          completionHandler: @escaping POSTCompletionHandler) {
+                      completionHandler: @escaping POSTCompletionHandler) {
         let serviceURL = baseURL+YOURLSClient.Service.endpoint
         guard let request = createPOSTRequest(serviceURL: serviceURL, queryParameters: queryParameters) else {
             completionHandler(nil, nil, nil)
@@ -90,7 +90,8 @@ class YOURLSClient: NSObject {
         session.finishTasksAndInvalidate()
     }
 
-    private func createPOSTRequest(serviceURL: String, queryParameters: [String : String]) -> URLRequest? {
+    private func createPOSTRequest(serviceURL: String,
+                                   queryParameters: [String : String]) -> URLRequest? {
         guard var URL = URL(string: serviceURL) else {
             return nil
         }
@@ -113,7 +114,7 @@ class YOURLSClient: NSObject {
 }
 
 extension YOURLSClient: URLSessionDelegate {
-    func urlSession(_ session: URLSession,
+    public func urlSession(_ session: URLSession,
                     didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Swift.Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct YOURLSLink {
-    var shortLink: String
-    var expandedLink: String
+public struct YOURLSLink {
+    public var shortLink: String
+    public var expandedLink: String
 }
