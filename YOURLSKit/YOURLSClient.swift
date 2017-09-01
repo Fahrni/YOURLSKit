@@ -9,6 +9,7 @@
 import Foundation
 
 public typealias ActionCompletionHandler = (_ link: YOURLSLink?, _ error: Error?) -> Void
+public typealias StatsCompletionHandler = (_ stats: YOURLSStats?, _ error: Error?) -> Void
 typealias POSTCompletionHandler = (Data?, URLResponse?, Error?) -> Void
 
 public class YOURLSClient: NSObject {
@@ -18,6 +19,7 @@ public class YOURLSClient: NSObject {
         static let shortURL = "shorturl"
         static let expandAction = "expand"
         static let longURL = "longurl"
+        static let stats = "stats"
         static let format = "json"
         static let methodPost = "POST"
     }
@@ -30,6 +32,16 @@ public class YOURLSClient: NSObject {
         self.baseURL = yourlsBaseURL
     }
 
+    /**
+     Shorten a given URL String
+
+     Given a long URL, like https://www.apple.com, this method will call your YOURLS server
+     to get a short version.
+
+     - parameter expandedURL: The long URL to shorten. E.G. https://www.apple.com
+     - parameter completionHandler: A closure that receives either a YOURLSLink or an Error. Expect
+     one parameter to be valid at all times.
+     */
     open func shorten(expandedURL: String, completionHandler: @escaping ActionCompletionHandler) {
         let URLParameters =  [
             "action": YOURLSClient.Service.shortAction,
@@ -52,6 +64,16 @@ public class YOURLSClient: NSObject {
         })
     }
 
+    /**
+     Expand a given URL String
+
+     Given a short URL, like https://youryourls.xyz/1 , this method will call your YOURLS server
+     to get the original long version.
+
+     - parameter expandedURL: The short URL to expand. E.G. https://youryourls.xyz/1
+     - parameter completionHandler: A closure that receives either a YOURLSLink or an Error. Expect
+     one parameter to be valid at all times.
+     */
     open func expand(shortURL: String, completionHandler: @escaping ActionCompletionHandler) {
         let URLParameters =  [
             "action": YOURLSClient.Service.expandAction,
@@ -70,6 +92,33 @@ public class YOURLSClient: NSObject {
                     let expandedURL = weakSelf.getLinkFor(key: YOURLSClient.Service.longURL, data) {
                     let link = YOURLSLink(shortLink: shortURL, expandedLink: expandedURL)
                     completionHandler(link, nil)
+                }
+        })
+    }
+
+    /**
+     Calls your YOURLS server to retrieve basic stats.
+
+     Returns the total number of links on your server and the total number of clicks of those links.
+
+     - parameter completionHandler: A closure that will receive a YOURLSStats or an Error. Expect
+     on parameter to be valid at all times.
+     */
+    open func stats(completionHandler: @escaping StatsCompletionHandler) {
+        let URLParameters =  [
+            "action": YOURLSClient.Service.stats,
+            "format": YOURLSClient.Service.format,
+            "signature": signature,
+            ]
+        POST(queryParameters: URLParameters,
+             completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+                if error != nil {
+                    completionHandler(nil, error)
+                    return
+                }
+                if let data = data,
+                    let stats = statsFromData(data) {
+                    completionHandler(stats, nil)
                 }
         })
     }
