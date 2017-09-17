@@ -14,6 +14,7 @@ typealias POSTCompletionHandler = (Data?, URLResponse?, Error?) -> Void
 
 public class YOURLSClient: NSObject {
     struct Service {
+        static let yourlsError = "yourlskit.error"
         static let endpoint = "yourls-api.php"
         static let shortAction = "shorturl"
         static let shortURL = "shorturl"
@@ -21,6 +22,8 @@ public class YOURLSClient: NSObject {
         static let longURL = "longurl"
         static let stats = "stats"
         static let format = "json"
+        static let statusCode = "statusCode"
+        static let message = "message"
         static let methodPost = "POST"
     }
 
@@ -61,6 +64,10 @@ public class YOURLSClient: NSObject {
                     let link = YOURLSLink(shortLink: shortURL, expandedLink: expandedURL)
                     completionHandler(link, nil)
                 }
+                if let response = response {
+                    let error = YOURLSError(urlResponse: response)
+                    completionHandler(nil, error)
+                }
         })
     }
 
@@ -93,6 +100,10 @@ public class YOURLSClient: NSObject {
                     let link = YOURLSLink(shortLink: shortURL, expandedLink: expandedURL)
                     completionHandler(link, nil)
                 }
+                if let response = response {
+                    let error = YOURLSError(urlResponse: response)
+                    completionHandler(nil, error)
+                }
         })
     }
 
@@ -116,9 +127,18 @@ public class YOURLSClient: NSObject {
                     completionHandler(nil, error)
                     return
                 }
-                if let data = data,
-                    let stats = statsFromData(data) {
-                    completionHandler(stats, nil)
+                if let data = data {
+                    if let stats = statsFromData(data) {
+                        completionHandler(stats, nil)
+                        return
+                    }
+                    if let error = errorFromData(data) {
+                        completionHandler(nil, error)
+                    }
+                }
+                if let response = response {
+                    let error = YOURLSError(urlResponse: response)
+                    completionHandler(nil, error)
                 }
         })
     }

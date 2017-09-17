@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5189A61D1F6A593E00F7F2DC /* YOURLSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5189A61C1F6A593E00F7F2DC /* YOURLSError.swift */; };
 		51A76C031F532954006C47D7 /* YOURLSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A76BF91F532954006C47D7 /* YOURLSKit.framework */; };
 		51A76C081F532954006C47D7 /* YOURLSKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A76C071F532954006C47D7 /* YOURLSKitTests.swift */; };
 		51A76C0A1F532954006C47D7 /* YOURLSKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A76BFC1F532954006C47D7 /* YOURLSKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5189A61C1F6A593E00F7F2DC /* YOURLSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOURLSError.swift; sourceTree = "<group>"; };
 		51A76BF91F532954006C47D7 /* YOURLSKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YOURLSKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51A76BFC1F532954006C47D7 /* YOURLSKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YOURLSKit.h; sourceTree = "<group>"; };
 		51A76BFD1F532954006C47D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				51A76C131F53297B006C47D7 /* YOURLSClient.swift */,
 				51A76C191F53306E006C47D7 /* YOURLSLink.swift */,
 				51DD887E1F59E09F00BA8BFD /* YOURLSStats.swift */,
+				5189A61C1F6A593E00F7F2DC /* YOURLSError.swift */,
 			);
 			path = YOURLSKit;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5189A61D1F6A593E00F7F2DC /* YOURLSError.swift in Sources */,
 				51A76C141F53297B006C47D7 /* YOURLSClient.swift in Sources */,
 				51A76C1A1F53306E006C47D7 /* YOURLSLink.swift in Sources */,
 				51DD887F1F59E09F00BA8BFD /* YOURLSStats.swift in Sources */,
@@ -399,7 +403,7 @@
 		51A76C111F532954006C47D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				DEVELOPMENT_TEAM = EK47Z4QZYG;
 				INFOPLIST_FILE = YOURLSKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -413,7 +417,7 @@
 		51A76C121F532954006C47D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				DEVELOPMENT_TEAM = EK47Z4QZYG;
 				INFOPLIST_FILE = YOURLSKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
